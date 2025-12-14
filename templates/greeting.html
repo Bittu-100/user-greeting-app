@@ -42,34 +42,43 @@
                     </div>
                 {% endif %}
                 
-                <!-- Fun facts section -->
+                <!-- Name Facts Section -->
                 <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <i class="bi bi-heart text-danger fs-1"></i>
-                                <h5>Did You Know?</h5>
-                                <p>Greeting people by name makes them feel valued and important!</p>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="bi bi-lightbulb"></i> Fun Facts About Names</h5>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="card h-100">
                             <div class="card-body">
-                                <i class="bi bi-lightning text-warning fs-1"></i>
-                                <h5>Fun Fact</h5>
-                                <p>Your name has {{ name|length }} characters! {% if name|length > 10 %}That's a long name!{% endif %}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <i class="bi bi-shuffle text-primary fs-1"></i>
-                                <h5>Try This</h5>
-                                <p>Go back and enter a different name to see a new greeting!</p>
+                                <div class="row">
+                                    {% for fact in name_facts %}
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card h-100 border-info">
+                                            <div class="card-body">
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                                <p class="mb-0">{{ fact }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <!-- Character Count -->
+                                <div class="text-center mt-3">
+                                    <div class="badge bg-secondary fs-6 p-3">
+                                        <i class="bi bi-fonts"></i>
+                                        Your name "{{ name }}" has {{ name|length }} character{% if name|length != 1 %}s{% endif %}!
+                                    </div>
+                                    {% if name|length > 10 %}
+                                    <div class="badge bg-warning text-dark fs-6 p-3 mt-2">
+                                        <i class="bi bi-award"></i> That's a long name!
+                                    </div>
+                                    {% elif name|length < 4 %}
+                                    <div class="badge bg-success fs-6 p-3 mt-2">
+                                        <i class="bi bi-lightning"></i> Short and sweet!
+                                    </div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,24 +103,49 @@
             </div>
         </div>
         
-        <!-- Recent Visitors (Simulated) -->
+        <!-- Visitor Stats -->
         <div class="card mt-4">
             <div class="card-header">
-                <h5 class="mb-0"><i class="bi bi-people"></i> Recent Visitors</h5>
+                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Visitor Statistics</h5>
             </div>
             <div class="card-body">
-                <div class="visitors-list">
-                    <span class="badge bg-secondary m-1">Emma</span>
-                    <span class="badge bg-secondary m-1">James</span>
-                    <span class="badge bg-secondary m-1">Sophia</span>
-                    <span class="badge bg-secondary m-1">Michael</span>
-                    <span class="badge bg-secondary m-1">Olivia</span>
-                    <span class="badge bg-secondary m-1">{{ name }}</span>
-                    <span class="badge bg-secondary m-1">William</span>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h1 class="display-6 text-primary">{{ visit_count }}</h1>
+                                <p class="mb-0">Your Visits</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h1 class="display-6 text-success">{{ range(1000, 9999)|random }}</h1>
+                                <p class="mb-0">Total App Visits</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h1 class="display-6 text-warning">{{ name|length }}</h1>
+                                <p class="mb-0">Name Length</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-muted mt-2 mb-0">
-                    <small>You're visitor #{{ range(100, 999)|random }}</small>
-                </p>
+                
+                <div class="mt-3">
+                    <h6><i class="bi bi-people"></i> Recent Greetings</h6>
+                    <div class="visitors-list">
+                        {% set names = ['Emma', 'James', 'Sophia', 'Michael', 'Olivia', 'William', 'Ava', 'Noah'] %}
+                        {% for visitor in names %}
+                        <span class="badge bg-secondary m-1">{{ visitor }}</span>
+                        {% endfor %}
+                        <span class="badge bg-primary m-1">{{ name }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
