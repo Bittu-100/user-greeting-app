@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Greeting App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-person-circle"></i> Welcome to Greeting App</h4>
+            </div>
+            
+            <div class="card-body">
+                <p class="lead">Enter your name below to receive a personalized greeting!</p>
+                
+                <form action="{{ url_for('greet') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">What's your name?</label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="name" 
+                               name="name" 
+                               placeholder="Enter your name here"
+                               required
+                               autofocus>
+                        <div class="form-text">
+                            Your name will be remembered during your visit.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-send"></i> Get Greeting
+                        </button>
+                    </div>
+                </form>
+                
+                {% if session.get('username') %}
+                <div class="alert alert-info mt-3">
+                    <i class="bi bi-info-circle"></i> 
+                    Currently greeting: <strong>{{ session.get('username') }}</strong>
+                    <a href="{{ url_for('reset_name') }}" class="btn btn-sm btn-outline-info ms-2">
+                        Change
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="bi bi-lightbulb"></i> How it works</h5>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">Enter your name in the form above</li>
+                        <li class="list-group-item">Click "Get Greeting"</li>
+                        <li class="list-group-item">View your personalized greeting</li>
+                        <li class="list-group-item">You can change your name anytime</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
