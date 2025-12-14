@@ -23,29 +23,6 @@ A simple Flask web application that provides personalized greetings to users. En
 - **Session**: Flask Session
 - **Environment**: Python-dotenv
 
-## 📁 Project Structure
-
-```
-user-greeting-app/
-├── app.py                 # Main Flask application
-├── requirements.txt       # Python dependencies
-├── README.md             # Project documentation
-├── LICENSE               # MIT License
-├── .env.example          # Environment variables template
-├── .gitignore            # Git ignore file
-├── Procfile              # Deployment configuration
-├── run.py                # Alternative run script
-├── test_app.py           # Testing script
-├── templates/            # HTML templates
-│   ├── base.html        # Base layout template
-│   ├── index.html       # Homepage with form
-│   ├── greeting.html    # Greeting display page
-│   ├── 404.html         # 404 error page
-│   └── 500.html         # 500 error page
-└── static/              # Static files
-    └── css/
-        └── style.css    # Custom styles
-```
 
 ## 🚀 Quick Start
 
@@ -57,7 +34,7 @@ user-greeting-app/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/user-greeting-app.git
+   git clone https://github.com/Bittu-100/user-greeting-app.git
    cd user-greeting-app
    ```
 
@@ -162,130 +139,6 @@ Response:
 }
 ```
 
-**Health check:**
-```bash
-curl http://localhost:5000/api/health
-```
-Response:
-```json
-{
-  "status": "healthy",
-  "app": "User Greeting App",
-  "version": "1.0.0",
-  "visitors": 42,
-  "timestamp": "2023-10-05T14:30:00.123456"
-}
-```
-
-## 🚢 Deployment
-
-### Heroku (Recommended for beginners)
-
-1. **Install Heroku CLI**
-2. **Login to Heroku**
-   ```bash
-   heroku login
-   ```
-3. **Create Heroku app**
-   ```bash
-   heroku create your-app-name
-   ```
-4. **Set environment variables**
-   ```bash
-   heroku config:set SECRET_KEY=your_secure_random_key
-   ```
-5. **Deploy**
-   ```bash
-   git push heroku main
-   ```
-6. **Open app**
-   ```bash
-   heroku open
-   ```
-
-### PythonAnywhere
-
-1. Create account on [pythonanywhere.com](https://www.pythonanywhere.com)
-2. Upload files via dashboard or connect GitHub repository
-3. Create virtual environment and install dependencies
-4. Configure web app with your `app.py`
-5. Add environment variables in web app configuration
-6. Reload web app
-
-### Generate Secure Secret Key
-
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-## 🔧 Development
-
-### Running in Development Mode
-
-```bash
-# With auto-reload on code changes
-python app.py
-
-# Or using the run script
-python run.py
-```
-
-### Testing
-
-```bash
-# Run the test script
-python test_app.py
-```
-
-### Project Commands
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Freeze dependencies
-pip freeze > requirements.txt
-
-# Run with specific port
-PORT=8080 python app.py
-
-# Run with production settings
-export FLASK_ENV=production
-python app.py
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. **Commit your changes**
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-4. **Push to the branch**
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. **Open a Pull Request**
-
-### Feature Ideas
-
-- Add database support to store greetings
-- Implement user authentication
-- Add multiple language support
-- Create greeting cards that can be shared
-- Add name pronunciation feature
-- Implement name meaning API integration
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - Built with [Flask](https://flask.palletsprojects.com/)
@@ -294,13 +147,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Inspired by beginner-friendly Flask tutorials
 - Project structure inspired by best practices
 
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/YOUR_USERNAME/user-greeting-app/issues) page
-2. Create a new issue with detailed description
-3. Email: your-email@example.com
 
 ## 🎓 Learning Resources
 
@@ -340,8 +186,3 @@ If you encounter any issues or have questions:
 4. **Real-time Features**: Add WebSockets with Flask-SocketIO
 5. **Testing**: Implement unit tests with pytest
 6. **CI/CD**: Set up GitHub Actions for automated testing and deployment
-
----
-
-Made with ❤️ by [Your Name]
-```
