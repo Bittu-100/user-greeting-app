@@ -32,9 +32,21 @@
     </main>
 
     <!-- Footer -->
+    <!-- Footer -->
     <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">User Greeting App &copy; 2023</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-muted">
+                        {{ app_info.name }} v{{ app_info.version }}
+                    </span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <span class="text-muted">
+                        Made with <i class="bi bi-heart-fill text-danger"></i> using Flask
+                    </span>
+                </div>
+            </div>
         </div>
     </footer>
 
