@@ -1,41 +1,56 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import datetime
 
 app = Flask(__name__)
-# Secret key for session management (in production, use a secure random key)
+# Change this to a more secure random key in production
 app.secret_key = 'your_secret_key_here_change_in_production'
 
-# Homepage route - shows the name input form
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Route to handle form submission and show greeting
 @app.route('/greet', methods=['POST'])
 def greet():
-    # Get the name from the form
     name = request.form.get('name', '').strip()
     
-    # Store name in session for persistence
-    if name:
-        session['username'] = name
+    # Validate the name
+    if not name:
+        # If no name provided, redirect back to home with error
+        session['error'] = 'Please enter your name!'
+        return redirect(url_for('index'))
     
-    # Redirect to greeting page
+    if len(name) > 50:
+        # If name is too long, truncate it
+        name = name[:50]
+        session['info'] = 'Name was too long, truncated to 50 characters'
+    
+    # Store in session
+    session['username'] = name
     return redirect(url_for('show_greeting'))
 
-# Route to display the greeting
 @app.route('/greeting')
 def show_greeting():
-    # Get name from session, or use default
+    # Get name from session or use default
     name = session.get('username', 'Guest')
-    return render_template('greeting.html', name=name)
+    
+    # Get current time for time-based greeting
+    now = datetime.now()
+    
+    # Pass both name and current time to template
+    return render_template('greeting.html', name=name, now=now)
 
-# Route to reset/change the name
 @app.route('/reset')
 def reset_name():
-    # Clear the name from session
+    # Clear the name and any messages from session
     session.pop('username', None)
-    # Redirect back to homepage
+    session.pop('error', None)
+    session.pop('info', None)
     return redirect(url_for('index'))
+
+# Add error handler for 404
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

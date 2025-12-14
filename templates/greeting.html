@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Hello {{ name }}! - Greeting App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <!-- Main Greeting Card -->
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="bi bi-stars"></i> Your Personalized Greeting</h3>
+            </div>
+            
+            <div class="card-body text-center py-5">
+                <!-- Animated greeting -->
+                <div class="greeting-container mb-4">
+                    <h1 class="display-4 fw-bold text-primary">
+                        Hello, <span class="text-success">{{ name }}</span>!
+                    </h1>
+                    
+                    <div class="mt-3">
+                        <span class="badge bg-warning text-dark fs-5 p-3">
+                            <i class="bi bi-emoji-smile"></i>
+                            Welcome to our Greeting App!
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Greeting message based on time of day -->
+                {% set hour = namespace(value=now.hour) %}
+                {% if hour.value < 12 %}
+                    <div class="alert alert-info fs-5">
+                        <i class="bi bi-sun"></i> Good morning! Hope you have a wonderful day ahead!
+                    </div>
+                {% elif hour.value < 18 %}
+                    <div class="alert alert-warning fs-5">
+                        <i class="bi bi-brightness-high"></i> Good afternoon! Hope you're having a great day!
+                    </div>
+                {% else %}
+                    <div class="alert alert-dark fs-5">
+                        <i class="bi bi-moon-stars"></i> Good evening! Hope you had a wonderful day!
+                    </div>
+                {% endif %}
+                
+                <!-- Fun facts section -->
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-heart text-danger fs-1"></i>
+                                <h5>Did You Know?</h5>
+                                <p>Greeting people by name makes them feel valued and important!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-lightning text-warning fs-1"></i>
+                                <h5>Fun Fact</h5>
+                                <p>Your name has {{ name|length }} characters! {% if name|length > 10 %}That's a long name!{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="bi bi-shuffle text-primary fs-1"></i>
+                                <h5>Try This</h5>
+                                <p>Go back and enter a different name to see a new greeting!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action buttons -->
+                <div class="mt-5">
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house"></i> Back to Home
+                        </a>
+                        
+                        <a href="{{ url_for('reset_name') }}" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-person-badge"></i> Change Name
+                        </a>
+                        
+                        <button class="btn btn-success btn-lg" onclick="shareGreeting()">
+                            <i class="bi bi-share"></i> Share Greeting
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Visitors (Simulated) -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-people"></i> Recent Visitors</h5>
+            </div>
+            <div class="card-body">
+                <div class="visitors-list">
+                    <span class="badge bg-secondary m-1">Emma</span>
+                    <span class="badge bg-secondary m-1">James</span>
+                    <span class="badge bg-secondary m-1">Sophia</span>
+                    <span class="badge bg-secondary m-1">Michael</span>
+                    <span class="badge bg-secondary m-1">Olivia</span>
+                    <span class="badge bg-secondary m-1">{{ name }}</span>
+                    <span class="badge bg-secondary m-1">William</span>
+                </div>
+                <p class="text-muted mt-2 mb-0">
+                    <small>You're visitor #{{ range(100, 999)|random }}</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for extra features -->
+<script>
+function shareGreeting() {
+    const greeting = "Hello, {{ name }}! Welcome to the Greeting App!";
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Greeting from Greeting App',
+            text: greeting,
+            url: window.location.href
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(greeting)
+            .then(() => {
+                alert('Greeting copied to clipboard! 📋\n"' + greeting + '"');
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    }
+}
+
+// Simple animation for the greeting
+document.addEventListener('DOMContentLoaded', function() {
+    const greeting = document.querySelector('.greeting-container h1');
+    greeting.style.opacity = '0';
+    greeting.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        greeting.style.transition = 'all 0.8s ease';
+        greeting.style.opacity = '1';
+        greeting.style.transform = 'translateY(0)';
+    }, 300);
+});
+</script>
+
+<!-- Add some custom inline styles for this page -->
+<style>
+.greeting-container h1 {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.8s ease;
+}
+
+.visitors-list .badge {
+    font-size: 1rem;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+}
+
+.visitors-list .badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %}

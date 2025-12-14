@@ -3,6 +3,29 @@
 {% block title %}Welcome - Greeting App{% endblock %}
 
 {% block content %}
+<!-- Flash messages -->
+{% if session.get('error') %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> {{ session.pop('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if session.get('info') %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle"></i> {{ session.pop('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card shadow">
